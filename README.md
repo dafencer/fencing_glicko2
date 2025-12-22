@@ -1,11 +1,11 @@
 # Score-based Glicko-2 Rating Model for Fencing 
 
 ## Resources
-PFA 1st Leg Senior Women's Épée Ranking: https://www.fencingtimelive.com/events/results/BC6BB9DF4F3C4698ABC67C7C981EA492
-PFA 2nd Leg Senior Women's Épée Ranking: https://www.fencingtimelive.com/events/results/E04B7C8376F44EB9802B73BE4BF12F4E
-PFA 3rd Leg Senior Women's Épée Ranking: https://www.fencingtimelive.com/events/results/7F980738E0144C8DAA418ECB7FBE3124
-PFA 4th Leg Senior Women's Épée Ranking: https://www.fencingtimelive.com/events/results/CE92CC2A35D341FB8FF98A33F8674355
-PFA 5th Leg Senior Women's Épée Ranking: https://www.fencingtimelive.com/events/results/2434850A79B148CC9608A0935CB5274E
+[PFA 1st Leg Senior Women's Épée Ranking](https://www.fencingtimelive.com/events/results/BC6BB9DF4F3C4698ABC67C7C981EA492)
+[PFA 2nd Leg Senior Women's Épée Ranking](https://www.fencingtimelive.com/events/results/E04B7C8376F44EB9802B73BE4BF12F4E)
+[PFA 3rd Leg Senior Women's Épée Ranking](https://www.fencingtimelive.com/events/results/7F980738E0144C8DAA418ECB7FBE3124)
+[PFA 4th Leg Senior Women's Épée Ranking](https://www.fencingtimelive.com/events/results/CE92CC2A35D341FB8FF98A33F8674355)
+[PFA 5th Leg Senior Women's Épée Ranking](https://www.fencingtimelive.com/events/results/2434850A79B148CC9608A0935CB5274E)
 
 ## Description
 
