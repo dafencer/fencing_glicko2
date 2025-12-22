@@ -12,6 +12,11 @@
 An in-depth paragraph about your project and overview of use.
 
 ## Getting Started
+### Data Collection
+- Pool Bouts: Scraped automatically for all tournament legs using Python and Selenium from [FencingTimeLive](https://www.fencingtimelive.com/)
+- Direct Elimination (DE) Bouts: Extracted manually by copying the full [tableau](https://www.fencingtimelive.com/tableaus/scores/BC6BB9DF4F3C4698ABC67C7C981EA492/BE91553421E241518AD27ECF74D93995) pages into a spreadsheet and processing them to retrieve individual match data.
+- 
+### Data Cleaning
 
 ### Dependencies
 
