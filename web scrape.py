@@ -87,7 +87,7 @@ all_legs_df = pd.DataFrame(
 )
 
 # Save to CSV if desired
-all_legs_df.to_csv("all_legs_bout_orders.csv", index=False)
+all_legs_df.to_csv("all_legs_pool_bouts.csv", index=False)
 
 # Close browser
 driver.quit()
