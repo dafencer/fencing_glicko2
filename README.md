@@ -15,7 +15,7 @@ This project uses data from the five legs of the 2025 PFA National Rankings for 
 - **Pool Bouts:** Scraped automatically for all tournament legs using Python and Selenium from [FencingTimeLive](https://www.fencingtimelive.com/). The script navigates to the Pools tab, opens the Details of each pool in a separate tab, and extracts the bout order table.
   <img width="1247" height="622" alt="image" src="https://github.com/user-attachments/assets/9854d6b7-ed87-4ab4-a3de-dc4e0bbb6c2c" />
 
-- **Direct Elimination (DE) Bouts:** Extracted manually by copying the full [tableau](https://www.fencingtimelive.com/tableaus/scores/BC6BB9DF4F3C4698ABC67C7C981EA492/BE91553421E241518AD27ECF74D93995) pages into a spreadsheet and processing them to retrieve individual match data.
+- **Direct Elimination (DE) Bouts:** The data were extracted manually by copying the full [tableau](https://www.fencingtimelive.com/tableaus/scores/BC6BB9DF4F3C4698ABC67C7C981EA492/BE91553421E241518AD27ECF74D93995) pages pages into a spreadsheet. The 'INDIRECT' function was used to organize individual match results into separate columns (e.g., right fencer, left fencer, winner, score) and to dynamically reference and parse cell values at regular intervals from the copied tableau, automating the extraction of match data for analysis.
   <img width="1710" height="897" alt="image" src="https://github.com/user-attachments/assets/002ddf11-aa03-4bcd-8bd3-f70cdeeb8cfd" />
 
 
