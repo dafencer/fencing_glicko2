@@ -12,8 +12,7 @@ This project uses data from the five legs of the 2025 PFA National Rankings for 
 - [PFA 5th Leg Senior Women's Épée Ranking](https://www.fencingtimelive.com/events/results/2434850A79B148CC9608A0935CB5274E)
 
 ### Data Collection
-- Pool Bouts: Scraped automatically for all tournament legs using Python and Selenium from [FencingTimeLive](https://www.fencingtimelive.com/)
-  The script navigates to the Pools tab, opens the Details of each pool in a separate tab, and extracts the bout order table.
+- Pool Bouts: Scraped automatically for all tournament legs using Python and Selenium from [FencingTimeLive](https://www.fencingtimelive.com/). The script navigates to the Pools tab, opens the Details of each pool in a separate tab, and extracts the bout order table.
   <img width="1247" height="622" alt="image" src="https://github.com/user-attachments/assets/9854d6b7-ed87-4ab4-a3de-dc4e0bbb6c2c" />
 
 
