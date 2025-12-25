@@ -71,6 +71,7 @@ for leg_index, url in enumerate(leg_urls, start=1):
                 row1 = table_rows[i]
                 row3 = table_rows[i + 2**(a+1)]
                 scorerow = table_rows[i + (1 + 2**a)]
+                winnerrow = table_rows[(i-1) + (1 + 2**a)]
 
                 # Right fencer
                 try:
@@ -103,10 +104,22 @@ for leg_index, url in enumerate(leg_urls, start=1):
                     if tsco_spans:  # if found at least one
                         score_cell = tsco_spans[0].text.strip()
                         break  # take the first one and stop
+               
+
+                # winner
+                try:
+                    w_fencer_last = winnerrow.find_element(By.CSS_SELECTOR, "span.tcln").text.strip()
+                except:
+                    w_fencer_last = ""
+                try:
+                    w_fencer_first = winnerrow.find_element(By.CSS_SELECTOR, "span.tcfn").text.strip()
+                except:
+                    w_fencer_first = ""
+                winner = f"{w_fencer_last} {w_fencer_first}".strip()
 
     
                 round_names = [th.text.strip() for th in table_cols if th.text.strip()][a]
-                all_bouts.append([leg_index, round_names, right_fencer, score_cell, left_fencer])
+                all_bouts.append([leg_index, round_names, right_fencer, left_fencer, score_cell, winner])
 
             except IndexError:
                 continue
@@ -114,7 +127,7 @@ for leg_index, url in enumerate(leg_urls, start=1):
 # ---------- Convert to DataFrame ----------
 df = pd.DataFrame(
     all_bouts,
-    columns=["Leg", "Round", "Right Fencer", "Score", "Left Fencer"]
+    columns=["Leg", "Round", "Right Fencer", "Left Fencer", "Score", "Winner"]
 )
 
 df.to_csv("all_legs_de_bouts.csv", index=False)
