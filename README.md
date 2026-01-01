@@ -19,7 +19,7 @@ Scraped all tournament legs from [FencingTimeLive](https://www.fencingtimelive.c
 - Added computed fields including:
   - Margin of Victory – difference between winner’s and loser’s scores
   - Outcomes – win/loss indicators
-  - Scaled Outcomes – calculated as: Scaled Outcome:
+  - Scaled Outcomes – calculated as:
 
 $$
 \text{Scaled Outcome} = 0.5 + \frac{\text{Margin of Victory}}{2 \times \text{Winning Score}}
