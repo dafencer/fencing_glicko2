@@ -9,7 +9,7 @@ Created on Sat Dec 27 12:04:06 2025
 import pandas as pd
 
 # Pool Matches
-df_pools = pd.read_csv('all_legs_pool_bouts.csv')
+df_pools = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/all_legs_pool_bouts_we.csv")
 
 # Parse Scores
 right_score_pool = df_pools['Score1'].apply(lambda x: int(x.replace('V','').replace('D','')))
@@ -25,7 +25,7 @@ scaled_outcome_pool = 0.5 + (mov_pool / (2 * pd.concat([right_score_pool, left_s
 
 
 cleaned_df_pools = pd.DataFrame({
-    'Leg': df_pools['Leg'],
+    'Leg': 2025 *10 + df_pools['Leg'],
     'Round': df_pools['Pool'],
     'Right Fencer': df_pools['Right Fencer'],
     'Left Fencer': df_pools['Left Fencer'],
@@ -38,16 +38,28 @@ cleaned_df_pools = pd.DataFrame({
 
 #DE Matches
 
-df_de = pd.read_csv('all_legs_de_bouts.csv')
+df_de = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/all_legs_de_bouts_we.csv")
 
 # Remove Bye Rounds
 df_de = df_de[df_de['Score'].notna() & (df_de['Score'] != "")]
 
-# Parse Scores
-scores_de = df_de['Score'].str.split('\n').str[0]
-scores_split = scores_de.str.split(' - ', expand=True).astype(int)
-score1_de = scores_split[0]
-score2_de = scores_split[1]
+# ---- FIXED SCORE PARSING ----
+scores_de = df_de['Score'].astype(str).str.strip()
+scores_de = scores_de.str.replace(r'[–—−]', '-', regex=True)  # normalize dash types
+scores_de = scores_de.str.split('\n').str[0]                  # first line only
+
+# extract scores like "15 - 12" or "15-12"
+scores_split = scores_de.str.extract(r'(\d+)\s*-\s*(\d+)')
+score1_de = pd.to_numeric(scores_split[0], errors='coerce')
+score2_de = pd.to_numeric(scores_split[1], errors='coerce')
+
+# remove rows where parsing failed
+valid_mask = score1_de.notna() & score2_de.notna()
+df_de = df_de[valid_mask].reset_index(drop=True)
+score1_de = score1_de[valid_mask].reset_index(drop=True)
+score2_de = score2_de[valid_mask].reset_index(drop=True)
+
+
 
 right_score_de = df_de.apply(
     lambda row: max(score1_de[row.name], score2_de[row.name])
@@ -73,7 +85,7 @@ outcome_de = (mov_de > 0).astype(int)
 scaled_outcome_de = 0.5 + (mov_de / (2 * pd.concat([right_score_de, left_score_de], axis=1).max(axis=1)))
 
 cleaned_df_de = pd.DataFrame({
-    'Leg': df_de['Leg'],
+    'Leg': 2025 *10 + df_de['Leg'],
     'Round': df_de['Round'],
     'Right Fencer': df_de['Right Fencer'],
     'Left Fencer': df_de['Left Fencer'],
@@ -91,7 +103,7 @@ print(cleaned_df_all_legs)
 
 
 # Save to csv
-cleaned_df_all_legs.to_csv("cleaned_df_all_legs.csv", index=False)
+cleaned_df_all_legs.to_csv("Women's Epee datasets/cleaned_df_all_legs_we.csv", index=False)
 
 
 

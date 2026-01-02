@@ -16,13 +16,13 @@ import numpy as np
 import plotly.graph_objects as go
 
 # ---------- Page Setup ----------
-st.set_page_config(page_title="Fencing Matchup Dashboard", layout="wide")
-st.title("⚔️ Fencing Head-to-Head Matchup Dashboard")
+st.set_page_config(page_title="Women's Epee Matchup", layout="wide")
+st.title("⚔️ Women's Epee Head-to-Head Matchup")
 
 
 # ---------- Load Data ----------
-matches_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/cleaned_df_all_legs_we.csv")
-fencers_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/Women's Epee Ratings.csv")
+matches_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_epee/cleaned_df_all_legs_we.csv")
+fencers_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_epee/Women's Epee Ratings.csv")
 
 # ---------- Clean Fencer Names ----------
 fencers_df['player'] = fencers_df['player'].astype(str).str.strip().str.title()
@@ -108,11 +108,22 @@ else:
     total_matches = head_to_head.shape[0]
 
     last = head_to_head.iloc[0]
+    
+    leg_full = int(last['Leg'])
+    year = leg_full // 10
+    leg_num = leg_full % 10
+    
     # Determine which score belongs to fencer_1 and fencer_2
     if last['Right Fencer'].strip().lower() == fencer_1.strip().lower():
-        last_match_display = f"{last['Right Score']}-{last['Left Score']}  ({last['Round']}, Leg {last['Leg']})"
+        last_match_display = (
+        f"{last['Right Score']}-{last['Left Score']}  "
+        f"({last['Round']}, {year} Leg {leg_num})"
+        )
     else:
-        last_match_display = f"{last['Left Score']}-{last['Right Score']}  ({last['Round']}, Leg {last['Leg']})"
+        last_match_display = (
+            f"{last['Left Score']}-{last['Right Score']}  "
+            f"({last['Round']}, {year} Leg {leg_num})"
+        )
 
 
 # =======================================================

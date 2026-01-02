@@ -9,7 +9,7 @@ Created on Fri Jan  2 01:01:35 2026
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('cleaned_df_all_legs_we.csv')
+df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/cleaned_df_all_legs_we.csv")
 
 matches = pd.DataFrame({
     'period': df['Leg'],
@@ -199,6 +199,6 @@ fencer_index['DE Touche Index'] = (fencer_index['player'].map(scored_de) - fence
 
 fencer_ratings_index  = pd.merge(fencer_df, fencer_index, on='player', how='outer')  # keep all fencers
 
-fencer_ratings_index.to_csv("Women's Epee Ratings.csv", index=False)
+fencer_ratings_index.to_csv("Women's Epee datasets/Women's Epee Ratings.csv", index=False)
 
 
