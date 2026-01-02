@@ -9,11 +9,11 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # ---------- Configuration ----------
 leg_urls = [
-    'https://www.fencingtimelive.com/events/results/76CB0AD0E6CE46BE9AF6C1B22A547E75',  # Leg 1
-    'https://www.fencingtimelive.com/events/results/0E6F31D1879040ACB84288D975710BB7',  # Leg 2
-    'https://www.fencingtimelive.com/events/results/E1A37665E3534B2AB4EBF3B0951A6476',  # Leg 3
-    'https://www.fencingtimelive.com/events/results/BE76E6461BC34C10BAB2DE65EDA8B402',  # Leg 4
-    'https://www.fencingtimelive.com/events/results/EEDC2FC470A54936B2574310C5351AA3',  # Leg 5
+    'https://www.fencingtimelive.com/events/results/1E4CF552A0894276ADC15A6ECEB579C3',  # Leg 1
+    'https://www.fencingtimelive.com/events/results/C32E1FC913124B0AB31AF033FF298C41',  # Leg 2
+    'https://www.fencingtimelive.com/events/results/01FF401CF55D48C4B84E94F1885E9A73',  # Leg 3
+    'https://www.fencingtimelive.com/events/results/74F4C54D8B1E4F429818345BC641E9B1',  # Leg 4
+    'https://www.fencingtimelive.com/events/results/7FE16DDA08CF4D688761C167368FE611',  # Leg 5
 ]
 chromedriver_path = '/Users/dancanlas/chromedriver-mac-x64/chromedriver'
 
@@ -130,7 +130,7 @@ df = pd.DataFrame(
     columns=["Leg", "Round", "Right Fencer", "Left Fencer", "Score", "Winner"]
 )
 
-df.to_csv("Men's Epee datasets/all_legs_de_bouts_me.csv", index=False)
+df.to_csv("Men's Foil datasets/all_legs_de_bouts_mf.csv", index=False)
 
 # Close browser
 driver.quit()

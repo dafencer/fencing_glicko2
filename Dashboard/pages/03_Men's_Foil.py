@@ -16,13 +16,13 @@ import numpy as np
 import plotly.graph_objects as go
 
 # ---------- Page Setup ----------
-st.set_page_config(page_title="Women's Epee Matchup", layout="wide")
-st.title("⚔️ Women's Epee Head-to-Head Matchup")
+st.set_page_config(page_title="Men's Foil Matchup", layout="wide")
+st.title("⚔️ Men's Foil Head-to-Head Matchup")
 
 
 # ---------- Load Data ----------
-matches_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_epee/cleaned_df_all_legs_we.csv")
-fencers_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_epee/Women's Epee Ratings.csv")
+matches_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_foil/cleaned_df_all_legs_mf.csv")
+fencers_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_foil/Men's Foil Ratings.csv")
 
 # ---------- Clean Fencer Names ----------
 fencers_df['player'] = fencers_df['player'].astype(str).str.strip()

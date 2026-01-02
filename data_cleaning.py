@@ -9,7 +9,7 @@ Created on Sat Dec 27 12:04:06 2025
 import pandas as pd
 
 # Pool Matches
-df_pools = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/all_legs_pool_bouts_we.csv")
+df_pools = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Men's Foil datasets/all_legs_pool_bouts_mf.csv")
 
 # Parse Scores
 right_score_pool = df_pools['Score1'].apply(lambda x: int(x.replace('V','').replace('D','')))
@@ -38,7 +38,7 @@ cleaned_df_pools = pd.DataFrame({
 
 #DE Matches
 
-df_de = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/all_legs_de_bouts_we.csv")
+df_de = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Men's Foil datasets/all_legs_de_bouts_mf.csv")
 
 # Remove Bye Rounds
 df_de = df_de[df_de['Score'].notna() & (df_de['Score'] != "")]
@@ -103,7 +103,7 @@ print(cleaned_df_all_legs)
 
 
 # Save to csv
-cleaned_df_all_legs.to_csv("Women's Epee datasets/cleaned_df_all_legs_we.csv", index=False)
+cleaned_df_all_legs.to_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_foil/cleaned_df_all_legs_mf.csv", index=False)
 
 
 

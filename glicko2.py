@@ -9,7 +9,7 @@ Created on Fri Jan  2 01:01:35 2026
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Women's Epee datasets/cleaned_df_all_legs_we.csv")
+df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_epee/cleaned_df_all_legs_we.csv")
 
 matches = pd.DataFrame({
     'period': df['Leg'],
@@ -186,9 +186,6 @@ right_count_de = df_de['Right Fencer'].value_counts()
 left_count_de = df_de['Left Fencer'].value_counts()
 total_count_de = right_count_de.add(left_count_de, fill_value=0)
 
-
-
-
 # Align totals
 scored_de = total_points_de.reindex(fencer_index['player']).fillna(0)
 received_de = total_points_opponent_de.reindex(fencer_index['player']).fillna(0)
@@ -197,8 +194,34 @@ fencer_index['Total DE Matches'] = fencer_index['player'].map(total_games_de)
 # DE Touche Index
 fencer_index['DE Touche Index'] = (fencer_index['player'].map(scored_de) - fencer_index['player'].map(received_de))/fencer_index['player'].map(total_games_de)
 
+
+# ---------- Pool W/L ----------
+df_pool['Right Win'] = (df_pool['Right Score'] > df_pool['Left Score']).astype(int)
+df_pool['Left Win'] = (df_pool['Left Score'] > df_pool['Right Score']).astype(int)
+
+pool_wins_right = df_pool.groupby('Right Fencer')['Right Win'].sum()
+pool_wins_left = df_pool.groupby('Left Fencer')['Left Win'].sum()
+total_pool_wins = pool_wins_right.add(pool_wins_left, fill_value=0)
+total_pool_losses = total_games_pool - total_pool_wins
+
+fencer_index['Pool Wins'] = fencer_index['player'].map(total_pool_wins)
+fencer_index['Pool Losses'] = fencer_index['player'].map(total_pool_losses)
+
+
+# ---------- DE W/L ----------
+df_de['Right Win'] = (df_de['Right Score'] > df_de['Left Score']).astype(int)
+df_de['Left Win'] = (df_de['Left Score'] > df_de['Right Score']).astype(int)
+
+de_wins_right = df_de.groupby('Right Fencer')['Right Win'].sum()
+de_wins_left = df_de.groupby('Left Fencer')['Left Win'].sum()
+total_de_wins = de_wins_right.add(de_wins_left, fill_value=0)
+total_de_losses = total_games_de - total_de_wins
+
+fencer_index['DE Wins'] = fencer_index['player'].map(total_de_wins)
+fencer_index['DE Losses'] = fencer_index['player'].map(total_de_losses)
+
+
+# ---------- Merge with ratings ----------
 fencer_ratings_index  = pd.merge(fencer_df, fencer_index, on='player', how='outer')  # keep all fencers
 
-fencer_ratings_index.to_csv("Women's Epee datasets/Women's Epee Ratings.csv", index=False)
-
-
+fencer_ratings_index.to_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_epee/Women's Epee Ratings.csv", index=False)

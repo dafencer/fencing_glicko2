@@ -23,8 +23,9 @@ st.title("⚔️ Men's Epee Head-to-Head Matchup")
 # ---------- Load Data ----------
 matches_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_epee/cleaned_df_all_legs_me.csv")
 fencers_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_epee/Men's Epee Ratings.csv")
+
 # ---------- Clean Fencer Names ----------
-fencers_df['player'] = fencers_df['player'].astype(str).str.strip().str.title()
+fencers_df['player'] = fencers_df['player'].astype(str).str.strip()
 players_list = fencers_df['player'].tolist()
 
 # ---------- Fencer Selection ----------
@@ -47,9 +48,9 @@ if fencer_1 == fencer_2:
     st.stop()
 
 
-# ---------- Pull Selected Fencer Stats Safely ----------
-f1_df = fencers_df[fencers_df['player'].str.strip().str.lower() == fencer_1.strip().lower()]
-f2_df = fencers_df[fencers_df['player'].str.strip().str.lower() == fencer_2.strip().lower()]
+# ---------- Pull Selected Fencer Stats ----------
+f1_df = fencers_df[fencers_df['player'].str.strip() == fencer_1.strip()]
+f2_df = fencers_df[fencers_df['player'].str.strip() == fencer_2.strip()]
 
 if f1_df.empty or f2_df.empty:
     st.error("One of the selected fencers is not found in the ratings CSV.")
@@ -61,12 +62,29 @@ f2 = f2_df.iloc[0]
 rating_1 = f1['rating']
 rating_2 = f2['rating']
 
+RD_1 = f1['RD']
+RD_2 = f2['RD']
 
+# ---------- Glicko-2 Scaled ----------
+def scale_rating(rating):
+    return (rating - 1500) / 173.7178
 
+def scale_RD(RD):
+    return RD / 173.7178
 
+r1 = scale_rating(rating_1)
+r2 = scale_rating(rating_2)
 
-# ---------- Glicko Based Probability ----------
-prob_1 = 1 / (1 + 10 ** ((rating_2 - rating_1) / 400))
+RD1 = scale_RD(RD_1)
+RD2 = scale_RD(RD_2)
+
+def g(RD):
+    return 1 / np.sqrt(1 + (3 * RD**2) / (np.pi**2))
+
+def E(r1, r2, RD2):
+    return 1 / (1 + np.exp(-g(RD2) * (r1 - r2)))
+
+prob_1 = E(r1, r2, RD2)
 prob_2 = 1 - prob_1
 
 favored_fencer = fencer_1 if prob_1 > prob_2 else fencer_2
@@ -76,29 +94,25 @@ favored_color = "#1E90FF" if favored_fencer == fencer_1 else "#2ECC71"
 
 # ---------- Head-to-Head Records ----------
 head_to_head = matches_df[
-    ((matches_df['Right Fencer'].str.strip().str.lower() == fencer_1.strip().lower()) &
-     (matches_df['Left Fencer'].str.strip().str.lower() == fencer_2.strip().lower())) |
-    ((matches_df['Right Fencer'].str.strip().str.lower() == fencer_2.strip().lower()) &
-     (matches_df['Left Fencer'].str.strip().str.lower() == fencer_1.strip().lower()))
+    ((matches_df['Right Fencer'].str.strip() == fencer_1.strip()) &
+     (matches_df['Left Fencer'].str.strip() == fencer_2.strip())) |
+    ((matches_df['Right Fencer'].str.strip() == fencer_2.strip()) &
+     (matches_df['Left Fencer'].str.strip() == fencer_1.strip()))
 ].sort_values(by="Leg", ascending=False)
 
 if head_to_head.empty:
     wins_1 = wins_2 = total_matches = 0
     last_match_display = "No match data"
 else:
-    # Initialize counters
     wins_1 = wins_2 = 0
 
     for _, row in head_to_head.iterrows():
-        # Determine which fencer is Right and which is Left
-        if row['Right Fencer'].strip().lower() == fencer_1.strip().lower():
-            # Right = fencer_1
+        if row['Right Fencer'].strip() == fencer_1.strip():
             if row['Outcome'] == 1:
                 wins_1 += 1
             else:
                 wins_2 += 1
         else:
-            # Right = fencer_2, Left = fencer_1
             if row['Outcome'] == 1:
                 wins_2 += 1
             else:
@@ -110,23 +124,20 @@ else:
     leg_full = int(last['Leg'])
     year = leg_full // 10
     leg_num = leg_full % 10
-   # Determine which score belongs to fencer_1 and fencer_2
-   
-   # Convert scores to integers first
+
     left_score = int(last['Left Score'])
     right_score = int(last['Right Score'])
-    
-    if last['Right Fencer'].strip().lower() == fencer_1.strip().lower():
+
+    if last['Right Fencer'].strip() == fencer_1.strip():
         last_match_display = (
-        f"{last['Right Score']}-{last['Left Score']}  "
-        f"({last['Round']}, {year} Leg {leg_num})"
+            f"{last['Right Score']}-{last['Left Score']}  "
+            f"({last['Round']}, {year} Leg {leg_num})"
         )
     else:
         last_match_display = (
             f"{last['Left Score']}-{last['Right Score']}  "
             f"({last['Round']}, {year} Leg {leg_num})"
         )
-
 
 
 # =======================================================
@@ -139,23 +150,52 @@ left, mid, right = st.columns([4, 3, 4])
 with left:
     st.markdown(
         f"""
-        <h1 style="color:#1E90FF;">{fencer_1}</h1>
-        Pool Touche Index: {f1['Pool Touche Index']}<br>
-        DE Touche Index: {f1['DE Touche Index']}<br>
-        Glicko 2 Rating: {rating_1}
+        <div style="text-align:center;">
+            <h2 style="color:#1E90FF; font-size:28px; margin-bottom:5px;">{fencer_1}</h2>
+            <div style="line-height:1.5;">
+                <b>Pool Touche Index:</b> {f1['Pool Touche Index']:.2f}<br>
+                <b>DE Touche Index:</b> {f1['DE Touche Index']:.2f}<br>
+                <b>Pool Record:</b> {int(f1['Pool Wins'])}-{int(f1['Pool Losses'])}<br>
+                <b>DE Record:</b> {int(f1['DE Wins'])}-{int(f1['DE Losses'])}<br><br>
+                <b>Glicko-2 Rating:</b> {rating_1:.2f}<br>
+                <b>Rating Deviation (RD):</b> {RD_1:.2f} 
+                <span style="color:gray; font-size:0.9em; font-weight:bold;">ⓘ</span>
+            </div>
+        </div>
         """,
         unsafe_allow_html=True
     )
 
+    with st.expander("ⓘ Info"):
+        st.write("Higher RD means more uncertainty in the rating estimate.")
+
 
 # ---- Center Panel (Head to Head + Gauge) ----
 with mid:
-    st.markdown("### 🆚 Head-to-Head Record")
-    st.write(f"**Record:** {wins_1}-{wins_2}")
-    st.write(f"**Last Match:** {last_match_display}")
-    st.markdown("---")
-    st.markdown("### 🎯 Match Outcome Probability")
+    # Head-to-Head Record with larger font
+    st.markdown(
+        "<div style='text-align:center; font-size:32px; font-weight:bold;'>🆚 Head-to-Head Record</div>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f"<div style='text-align:center; font-size:18px; margin-top:5px;'><b>Record:</b> {wins_1}-{wins_2}</div>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f"<div style='text-align:center; font-size:16px; margin-bottom:10px;'><b>Last Match:</b> {last_match_display}</div>",
+        unsafe_allow_html=True
+    )
 
+    # Divider
+    st.markdown("<hr style='margin-top:5px; margin-bottom:5px;'>", unsafe_allow_html=True)
+
+    # Match Outcome Probability heading, closer to the gauge
+    st.markdown(
+        "<div style='text-align:center; font-size:28px; font-weight:bold; margin-bottom:5px;'>🎯 Match Outcome Probability</div>",
+        unsafe_allow_html=True
+    )
+
+    # Gauge
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=favored_prob * 100,
@@ -179,17 +219,33 @@ with mid:
 
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write(f"📊 **{fencer_1}: {prob_1:.1%}**   |   **{fencer_2}: {prob_2:.1%}**")
+    # Probabilities below the gauge, centered
+    st.markdown(
+        f"<div style='text-align:center; font-size:18px; margin-top:-10px;'><b>{fencer_1}:</b> {prob_1:.1%}  |  <b>{fencer_2}:</b> {prob_2:.1%}</div>",
+        unsafe_allow_html=True
+    )
+
 
 
 # ---- Fencer 2 Panel ----
 with right:
     st.markdown(
         f"""
-        <h1 style="color:#2ECC71;">{fencer_2}</h1>
-        Pool Touche Index: {f2['Pool Touche Index']}<br>
-        DE Touche Index: {f2['DE Touche Index']}<br>
-        Glicko 2 Rating: {rating_2}
+        <div style="text-align:center;">
+            <h2 style="color:#2ECC71; font-size:28px; margin-bottom:5px;">{fencer_2}</h2>
+            <div style="line-height:1.5;">
+                <b>Pool Touche Index:</b> {f2['Pool Touche Index']:.2f}<br>
+                <b>DE Touche Index:</b> {f2['DE Touche Index']:.2f}<br>
+                <b>Pool Record:</b> {int(f2['Pool Wins'])}-{int(f2['Pool Losses'])}<br>
+                <b>DE Record:</b> {int(f2['DE Wins'])}-{int(f2['DE Losses'])}<br><br>
+                <b>Glicko-2 Rating:</b> {rating_2:.2f}<br>
+                <b>Rating Deviation (RD):</b> {RD_2:.2f} 
+                <span style="color:gray; font-size:0.9em; font-weight:bold;">ⓘ</span>
+            </div>
+        </div>
         """,
         unsafe_allow_html=True
     )
+
+    with st.expander("ⓘ Info"):
+        st.write("Higher RD means more uncertainty in the rating estimate.")
