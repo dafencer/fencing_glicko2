@@ -132,7 +132,8 @@ Separating pool and DE ratings reveals meaningful competitive patterns, highligh
 
 <div style="text-align: justify;">
 
-Planned extensions to this project include time-decay weighting for recent performances, cross-weapon normalization, tournament-level match simulations, integration of seeding effects, and deployment of a public-facing dashboard. Further validation against international ranking systems is also planned.
+Planned extensions to this project include time-decay weighting for recent performances, cross-weapon normalization, tournament-level match simulations, integration of seeding effects, and deployment of a public-facing dashboard. Further validation against international ranking systems is also planned. Additionally, the model can be extended to implement predictions for **team events**, allowing comparisons and outcome estimations for national teams based on aggregated individual performances.
+
 
 </div>
 
@@ -142,5 +143,5 @@ Planned extensions to this project include time-decay weighting for recent perfo
 
 - [Philippine Fencing Association (PFA)](https://phil-fencing.com/)  
 - [FencingTimeLive]((https://www.fencingtimelive.com/)) for tournament data access  
-- Glickman, M. E. (2012). *[Glicko-2 system](https://www.glicko.net/glicko.html)*  
+- Glickman, M. E. (2012). *[The Glicko-2 System](https://www.glicko.net/glicko/glicko2.pdf)*  
 - Streamlit and Plotly open-source communities
