@@ -103,7 +103,7 @@ print(cleaned_df_all_legs)
 
 
 # Save to csv
-cleaned_df_all_legs.to_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_saber/cleaned_df_all_legs_ms.csv", index=False)
+cleaned_df_all_legs.to_csv("Dashboard/datasets/mens_saber/cleaned_df_all_legs_ms.csv", index=False)
 
 
 

@@ -9,7 +9,7 @@ Created on Fri Jan  2 01:01:35 2026
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_saber/cleaned_df_all_legs_ms.csv")
+df = pd.read_csv("Dashboard/datasets/mens_saber/cleaned_df_all_legs_ms.csv")
 
 # Filter only pool matches
 df_pool = df[df['Round'].str.contains('pool', case=False, na=False)]
@@ -248,4 +248,4 @@ fencer_index['DE Losses'] = fencer_index['player'].map(total_de_losses)
 # ---------- Merge with ratings ----------
 fencer_ratings_index  = pd.merge(fencer_df, fencer_index, on='player', how='outer')  # keep all fencers
 
-fencer_ratings_index.to_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/mens_saber/Men's Saber Ratings.csv", index=False)
+fencer_ratings_index.to_csv("Dashboard/datasets/mens_saber/Men's Saber Ratings.csv", index=False)

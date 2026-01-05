@@ -57,8 +57,8 @@ render_footer()
 
 
 # ---------- Load Data ----------
-matches_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_saber/cleaned_df_all_legs_ws.csv")
-fencers_df = pd.read_csv("/Users/dancanlas/Projects/fencing_glicko2/Dashboard/datasets/womens_saber/Women's Saber Ratings.csv")
+matches_df = pd.read_csv("datasets/womens_saber/cleaned_df_all_legs_ws.csv")
+fencers_df = pd.read_csv("datasets/womens_saber/Women's Saber Ratings.csv")
 
 cols = ['Pool Wins', 'Pool Losses', 'DE Wins', 'DE Losses']
 fencers_df[cols] = fencers_df[cols].fillna(0).astype(int)
