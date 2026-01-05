@@ -2,7 +2,7 @@
 
 <div style="text-align: justify;">
 
-This project presents a **Head-to-Head (H2H) analytics dashboard** for the **Philippine Fencing Association (PFA) National Rankings**, covering **all three weapons in each category (Men’s and Women’s Épée, Foil, and Sabre)**.
+This project presents a **Head-to-Head (H2H) analytics dashboard** for the **Philippine Fencing Association (PFA) Senior Rankings**, covering **all three weapons in each category (Men’s and Women’s Épée, Foil, and Sabre)**.
 
 The system combines **web-scraped bout-level data**, a **score-based Glicko-2 rating model**, and an **interactive Streamlit dashboard** to enable direct comparisons between any two fencers. Unlike traditional win/loss rating systems, this implementation incorporates **margin of victory** to better reflect match dominance and competitive intensity, particularly important in fencing where score differentials carry meaningful information.
 
