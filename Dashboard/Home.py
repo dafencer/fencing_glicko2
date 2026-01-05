@@ -31,7 +31,7 @@ st.markdown(
 
 
 
-st.title(" 🤺 Head2Head PFA Rankings Dashboard")
+st.title(" 🤺 Head-to-Head Fencing Analytics for Philippine Fencing Association Senior Rankings")
 
 # ---------- Footer ----------
 
