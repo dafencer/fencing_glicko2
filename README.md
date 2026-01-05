@@ -55,9 +55,7 @@ Additional computed fields were added, including **margin of victory (MOV)** and
 
 </div>
 
-\[
-\text{Scaled Outcome} = 0.5 + \frac{\text{Margin of Victory}}{2 \times \text{Winning Score}}
-\]
+$$ \text{Scaled Outcome} = 0.5 + \frac{\text{Margin of Victory}}{2 \times \text{Winning Score}} $$
 
 <div style="text-align: justify;">
 
