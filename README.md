@@ -95,7 +95,7 @@ This separation reflects structural differences between pool bouts (shorter, rou
 </div>
 
 Relevant script:
-- `glicko2_model.py`
+- `glicko2.py`
 
 ---
 
@@ -103,4 +103,44 @@ Relevant script:
 
 <div style="text-align: justify;">
 
-The interactive dashboard was developed using **Streamlit**, with **Plotly** used for all visualizations. The interface supports weapon- and c
+The interactive dashboard was developed using **Streamlit**, with **Plotly** used for all visualizations. The interface supports weapon- and category-specific pages, enabling users to select any two fencers and view side-by-side comparisons.
+
+Displayed information includes Glicko-2 ratings, rating deviations, head-to-head history, and probabilistic win predictions. Prediction probabilities are computed using the standard Glicko-2 expected score formulation, with ratings transformed into Glicko-2 scale space and evaluated separately for pool and DE contexts.
+
+</div>
+
+Relevant components:
+- `Home.py`
+- Weapon-specific pages (e.g., `Women's_Epee.py`, `Men's_Foil.py`)
+- Shared styling and utility functions
+
+---
+
+## Evaluation
+
+<div style="text-align: justify;">
+
+The score-based Glicko-2 model produces more informative and stable ratings than traditional win–loss systems. By incorporating margin of victory, the model distinguishes dominant performances from narrow wins while maintaining appropriate uncertainty for fencers with limited match histories.
+
+Separating pool and DE ratings reveals meaningful competitive patterns, highlighting fencers who perform consistently in pools but underperform in elimination bouts, as well as those who peak during DE matches.
+
+</div>
+
+---
+
+## Future Work
+
+<div style="text-align: justify;">
+
+Planned extensions to this project include time-decay weighting for recent performances, cross-weapon normalization, tournament-level match simulations, integration of seeding effects, and deployment of a public-facing dashboard. Further validation against international ranking systems is also planned.
+
+</div>
+
+---
+
+## Acknowledgments / References
+
+- [Philippine Fencing Association (PFA)](https://phil-fencing.com/)  
+- [FencingTimeLive]((https://www.fencingtimelive.com/)) for tournament data access  
+- Glickman, M. E. (2012). *[Glicko-2 system](https://www.glicko.net/glicko.html)*  
+- Streamlit and Plotly open-source communities
