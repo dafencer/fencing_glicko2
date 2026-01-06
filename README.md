@@ -4,7 +4,9 @@
 
 This project presents a **Head-to-Head (H2H) analytics dashboard** for the **Philippine Fencing Association (PFA) Senior Rankings**, covering **all three weapons in each category (Men’s and Women’s Épée, Foil, and Sabre)**.
 
-The system combines **web-scraped bout-level data**, a **score-based Glicko-2 rating model**, and an **interactive Streamlit dashboard** to enable direct comparisons between any two fencers. Unlike traditional win/loss rating systems, this implementation incorporates **margin of victory** to better reflect match dominance and competitive intensity, particularly important in fencing where score differentials carry meaningful information.
+The system combines **web-scraped bout-level data**, a **score-based Glicko-2 rating model**, and an **interactive Streamlit dashboard** to enable direct comparisons between any two fencers. Unlike traditional win/loss rating systems, this implementation incorporates **margin of victory** to better reflect match dominance and competitive intensity, particularly important in fencing where score differentials carry meaningful information. 
+
+> In this score-based Glicko-2 model, ratings predict **expected match intensity** rather than purely win probability. The `scaled_outcome` uses the normalized score margin to indicate how decisively a fencer won a bout, allowing the model to capture both skill and dominance.
 
 The dashboard allows users to compare two fencers’ pool and direct elimination (DE) performance, view separate Glicko-2 ratings for pools and DE bouts, examine head-to-head history, and generate probabilistic match predictions while explicitly accounting for rating uncertainty.
 
