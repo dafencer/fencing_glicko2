@@ -83,26 +83,34 @@ Relevant script:
 
 ## Model Building and Validation
 
-<div style="text-align: justify;">
+A **custom score-based Glicko-2 rating model** was implemented from first principles in Python, following the official Glicko-2 framework while extending it to support **margin-aware outcomes**.  
 
-A **custom score-based Glicko-2 rating model** was implemented from first principles in Python, following the official Glicko-2 framework while extending it to support margin-aware outcomes.
+Instead of binary win–loss results, the model uses **scaled outcomes** derived from the normalized score margin of each bout:
 
-Instead of binary win–loss results, the model processes **scaled outcomes** derived from margin of victory. Matches are grouped into rating periods aligned with tournament legs, and each fencer’s **rating**, **rating deviation (RD)**, and **volatility** are updated accordingly.
+\[
+\text{scaled\_outcome} = 0.5 + \frac{\text{margin}}{2 \cdot \text{winning\_score}}
+\]
 
-</div>
+This normalization maps the raw margin to a **0–1 range**, with close matches near 0.5 and dominant victories closer to 1. Consequently, the ratings reflect both the likelihood of winning and the **expected intensity of the win**.
 
-Two independent rating systems were computed:
-- **Pool Glicko-2 Ratings**
-- **Direct Elimination (DE) Glicko-2 Ratings**
+> **Interpretation:** In this score-based Glicko-2 framework, ratings predict **expected match intensity** rather than purely win probability. A higher rating indicates a higher likelihood of winning **and** the expectation of winning more decisively, which is particularly relevant in fencing, where score differentials carry meaningful information about skill and dominance.
 
-<div style="text-align: justify;">
+Matches are grouped into rating periods corresponding to tournament legs, and each fencer’s **rating**, **rating deviation (RD)**, and **volatility** are updated accordingly. To evaluate the model, bouts from **Legs 1–3 were used as the training set**, and bouts from **Legs 4–5 were used as the test set**.
 
-This separation reflects structural differences between pool bouts (shorter, round-robin format) and DE matches (longer, elimination-based), allowing for more accurate performance modeling.
+Two independent rating systems were computed:  
+- **Pool Glicko-2 Ratings**  
+- **Direct Elimination (DE) Glicko-2 Ratings**  
 
-</div>
+This separation accounts for structural differences between pool bouts (shorter, round-robin format) and DE matches (longer, elimination-based), allowing for more accurate modeling of performance.
 
-Relevant script:
-- Model Validation: `model.py`
+**Model Validation:**  
+Model performance on the test set was evaluated using **mean absolute error (MAE)** between predicted and observed `scaled_outcome`. For comparison, MAE was also computed using a **standard Glicko-2 model**, applying the same ratings to predict `scaled_outcome`. This allows assessment of how the score-based extension relates to the traditional binary outcome approach.  
+
+**MAE Tables:**  
+<!-- Insert MAE tables here -->
+
+**Relevant scripts:**  
+- Model Validation: `model.py`  
 - Final Model Implementation: `glicko2.py`
 
 ---
