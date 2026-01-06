@@ -78,7 +78,7 @@ Relevant script:
 
 ---
 
-## Model Building
+## Model Building and Validation
 
 <div style="text-align: justify;">
 
@@ -99,7 +99,8 @@ This separation reflects structural differences between pool bouts (shorter, rou
 </div>
 
 Relevant script:
-- `glicko2.py`
+- Model Validation: `model.py`
+- Final Model Implementation: `glicko2.py`
 
 ---
 
