@@ -2,13 +2,18 @@
 
 <div style="text-align: justify;">
 
-This project presents a **Head-to-Head (H2H) analytics dashboard** for the **Philippine Fencing Association (PFA) Senior Rankings**, covering **all three weapons in each category (Men’s and Women’s Épée, Foil, and Sabre)**.
+This project presents a <strong>Head-to-Head (H2H) analytics dashboard</strong> for the <strong>Philippine Fencing Association (PFA) Senior Rankings</strong>, covering <strong>all three weapons in each category (Men’s and Women’s Épée, Foil, and Sabre)</strong>.
 
-The system combines **web-scraped bout-level data**, a **score-based Glicko-2 rating model**, and an **interactive Streamlit dashboard** to enable direct comparisons between any two fencers. Unlike traditional win/loss rating systems, this implementation incorporates **margin of victory** to better reflect match dominance and competitive intensity, particularly important in fencing where score differentials carry meaningful information. 
+The system combines <strong>web-scraped bout-level data</strong>, a <strong>score-based Glicko-2 rating model</strong>, and an <strong>interactive Streamlit dashboard</strong> to enable direct comparisons between any two fencers. Unlike traditional win/loss rating systems, this implementation incorporates <strong>margin of victory</strong> to better reflect match dominance and competitive intensity, particularly important in fencing where score differentials carry meaningful information. 
 
-> In this score-based Glicko-2 model, ratings predict **expected match intensity** rather than purely win probability. The `scaled_outcome` uses the normalized score margin to indicate how decisively a fencer won a bout, allowing the model to capture both skill and dominance.
+<blockquote>
+In this score-based Glicko-2 model, ratings predict <strong>expected match intensity</strong> rather than purely win probability. The <code>scaled_outcome</code> uses the normalized score margin to indicate how decisively a fencer won a bout, allowing the model to capture both skill and dominance.
+</blockquote>
 
 The dashboard allows users to compare two fencers’ pool and direct elimination (DE) performance, view separate Glicko-2 ratings for pools and DE bouts, examine head-to-head history, and generate probabilistic match predictions while explicitly accounting for rating uncertainty.
+
+</div>
+
 
 <img width="1710" height="975" alt="image" src="https://github.com/user-attachments/assets/6a71c3d7-7fde-486a-9e99-5ba0da22d8f4" />
 <img width="1710" height="981" alt="image" src="https://github.com/user-attachments/assets/1c654be4-c630-4f10-b3ae-7c9364c4ed97" />
