@@ -312,6 +312,12 @@ def win_prob(matches, ratings):
     matches = matches.copy()  # avoid modifying original DataFrame
 
     # Map ratings to players
+    matches['player_rating'] = matches['player'].map(
+        dict(zip(ratings['player'], ratings['rating']))
+    )
+    matches['opponent_rating'] = matches['opponent'].map(
+        dict(zip(ratings['player'], ratings['rating']))
+    )
     matches['rating1'] = matches['player'].map(
         dict(zip(ratings['player'], ratings['scaled_rating']))
     )
@@ -325,7 +331,7 @@ def win_prob(matches, ratings):
     # Compute win probability
     matches['prob_player_wins'] = 1 / (1 + np.exp(-matches['g_scaled_RD2'] * (matches['rating1'] - matches['rating2'])))
 
-    return matches[['player','opponent','outcome','scaled_outcome','prob_player_wins']]
+    return matches[['player','opponent','player_rating','opponent_rating','outcome','scaled_outcome','prob_player_wins']]
 
 # %% Standard Model Matches Test Set with Win Probabilities
 
